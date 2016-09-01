@@ -22,6 +22,7 @@ var app = app || {};
         },
 
         openPlayer: function(iframe, channel_model){
+            iframe = iframe.replace('http', 'https');
             this.player_name.html(channel_model.get('name'));
             this.iframe_container.html(iframe);
             $('iframe', this.el).css('width', '100%');
