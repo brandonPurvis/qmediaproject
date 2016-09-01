@@ -1,5 +1,5 @@
-import youtube_api
 from flask import Flask, render_template, jsonify
+from lib import youtube_api
 
 app = Flask(__name__)
 
