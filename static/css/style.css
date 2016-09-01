@@ -1,0 +1,126 @@
+.content-message {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#loading-overlay {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .9);
+}
+#loading-image {
+    display: block;
+    position: relative;
+    margin: 10% auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+#loading-text {
+    color: grey;
+    font-size: 3em;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin:5% auto;
+}
+
+/* From w3schools on modals */
+#player-modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0,0,0,.8);
+}
+
+#player-content {
+    position: relative;
+    display: block;
+    background-color: rgb(0,0,0);
+    color: grey;
+    margin: 5% auto;
+    width: 80%;
+    height: 80%;
+}
+
+#iframe-container {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+
+#player-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#player-close:hover,
+#player-close:focus {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* end from w3schools on modals */
+
+.content-view{
+    position: relative;
+    display: inline-block;
+    background: #FEFEFE;
+	border: 2px solid #FAFAFA;
+	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+	margin: 0 2px 15px;
+	padding: 5px;
+}
+
+.content-desc {
+    position: absolute;
+    top: 5px;
+    display: none;
+    background-color: rgba(0,0,0,0.2);
+    color: white;
+    height: 250px;
+    width: 250px;
+}
+
+.content-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 5px;
+}
+
+.filter-button {
+    display: block;
+    width: 100%;
+}
+
+.content-tag-list {
+	position: absolute;
+	overflow: hidden;
+	top: 230px;
+	left:10px;
+	height:20px;
+}
+
+.about-view{
+    font-size: 1.25em;
+    line-height: 200%;
+}
+
+.tag-badge{
+    font-size: .75em;
+}
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>Q.M.P</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/style.css")}}/>
+</head>
+<body>
+    <div id="menu-container"></div>
+    <div class="container">
+        <div id="app-container"></div>
+        <div id="about-container"></div>
+        <div id="player-container"></div>
+    </div>
+
+    <!-- Templates -->
+    <script type="text/template" id="player-template">
+        <div id="player-modal">
+            <div id="player-content">
+                <span id="player-close">X</span>
+                <div id="player-name"></div>
+                <div id="iframe-container"></div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="menu-template">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <p class="navbar-brand"> The Queer Media Project</p>
+                </div>
+                <div class="nav navbar-nav">
+                    <li id="home-nav"><a>Home</a></li>
+                    <li id="about-nav"><a>About</a></li>
+                </div>
+            </div>
+        </nav>
+    </script>
+
+    <script type="text/template" id="app-template">
+        <div id="app">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div id="filter"></div>
+                </div>
+
+                <div class="col-sm-10">
+                    <div id="content">
+                        <div id="loading-overlay">
+                            <img id="loading-image" src="http://i.imgur.com/8YsAmq3.gif"/>
+                            <div id="loading-text"> Loading the QMP...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="content-template">
+        <div class="content-view">
+            <img class="content-image" src='<%= image %>'/>
+            <div class="content-name"><b><%= name %></b></div>
+            <div class="content-desc"><div class="content-message">View <%= name%>'s Playlist</div></div>
+            <div class="content-tag-list"></div>
+        </div>
+    </script>
+
+    <script type="text/template" id="about-template">
+        <div class="about-view">
+            <h1>What is the Q.M.P</h1>
+            <p>
+                <em>The Queer Media Project(QMP) aims to facilitate peoples exploration of their own identities by showcasing the lives and experiences of others with queer identities through online and digital media.</em>
+            </p>
+            <p>
+                The mainstream media has failed to portray the incredible breadth of identities and expressions of identities that truly exists in the world.
+                As a result, those people who are beginning to explore their identities can see nobody else like themselves, which may lead them to feel isolated and alone.
+                The internet is a tool that can be used to combat the failures of the mainstream media.
+                The internet lowers the barriers to media creation and distribution.
+                The internet allows those with queer identities to create their own media and also to find the work of and connect with others like themselves.
+            </p>
+            <p>The purpose of the QMP is to leverage the power of the internet to create a single source from which identity exploration can be carried out.</p>
+
+            <p>The purpose of the QMP is to be a site that reflects the incredible range of identities and expressions in the world.</p>
+
+            <p>The purpose of the QMP is to be a place where a wide array of identities are presented,
+                where marginalized identities are accessible, where people can see themselves in the experiences of others.</p>
+        </div>
+    </script>
+    <!-- Scripts -->
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+    <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/channel.js" ) }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/filter.js" ) }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/about.js" ) }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/menu.js" ) }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/channel-app.js" ) }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/components/player.js") }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="js/app.js" ) }}></script>
+</body>
+</html>
