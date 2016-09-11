@@ -75,6 +75,12 @@ CHANNEL_IDS = [
     'UCT9lRRTBWIqMIfVgSyfsg7Q',
     'UCLwrLrQPNKsMr9p1035cizA',
     'UCUJvkFRoXA3qOUkogplkEXg',
+    'UCVKzWDFp9m7H1KkIiyUh89Q',
+    'UCVF8SAGEQnBA-yKM4iQNqfw',
+    'UCxEP_yFmXdu9H5HHC_hjcKw',
+    'UCJc21Oi4zYvDUW__jznTyoQ',
+    'UCniXurp_3xcDh923eiqGX3w',
+    'UCznS4Pk3VcTIfDUuWrQtdzQ',
 ]
 
 
