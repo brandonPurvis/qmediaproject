@@ -11,9 +11,16 @@
         <div id="app-container"></div>
         <div id="about-container"></div>
         <div id="player-container"></div>
+        <div id="random-container"></div>
     </div>
 
     <!-- Templates -->
+    <script type="text/template" id="random-template">
+        <h1> Hello Joe de Pinto!</h1>
+        <div id="random-video"><%= desc %></div>
+        <button id="get-random">Get Random Channel</button>
+    </script>
+
     <script type="text/template" id="player-template">
         <div id="player-modal">
             <div id="player-content">
@@ -33,6 +40,7 @@
                 <div class="nav navbar-nav">
                     <li id="home-nav"><a>Home</a></li>
                     <li id="about-nav"><a>About</a></li>
+                    <li id="random-nav"><a>Random</a></li>
                 </div>
             </div>
         </nav>
@@ -65,6 +73,7 @@
             <div class="content-tag-list"></div>
         </div>
     </script>
+
 
     <script type="text/template" id="about-template">
         <div class="about-view">

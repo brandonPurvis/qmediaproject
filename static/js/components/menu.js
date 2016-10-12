@@ -20,14 +20,19 @@ var app = app || {};
             $(this.el).html( this.template() );
         },
 
-        goToHome: function(){
+        hideAll: function(){
+            app.appView.hide();
             app.aboutView.hide();
+        },
+
+        goToHome: function(){
+            this.hideAll();
             app.appView.show();
         },
 
         goToAbout: function(){
+            this.hideAll();
             app.aboutView.show();
-            app.appView.hide();
         }
     });
 })();

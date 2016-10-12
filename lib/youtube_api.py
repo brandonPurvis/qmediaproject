@@ -1,6 +1,8 @@
 import pprint
 from apiclient.discovery import build
 
+API_KEY = 'AIzaSyDPRG9co3-DkVg-ek58XZD3YSbkmCi08X0'
+YOUTUBE = build('youtube', 'v3', developerKey=API_KEY)
 
 class Channel(object):
     def __init__(self, name, image, desc, channel_id):
@@ -46,8 +48,7 @@ class Channel(object):
 
 
 def get_channel(channel_id):
-    youtube = build('youtube', 'v3', developerKey='AIzaSyDPRG9co3-DkVg-ek58XZD3YSbkmCi08X0')
-    search_response = youtube.channels().list(
+    search_response = YOUTUBE.channels().list(
         part='snippet',
         id=channel_id,
     ).execute()
@@ -55,15 +56,18 @@ def get_channel(channel_id):
         return None
     return Channel.from_api_response(search_response['items'][0])
 
-def get_channel_playlist(channel_id):
-    youtube = build('youtube', 'v3', developerKey='AIzaSyDPRG9co3-DkVg-ek58XZD3YSbkmCi08X0')
-    channel_resources = youtube.channels().list(
+def get_channel_upload_playlist(channel_id):
+    channel_resources = YOUTUBE.channels().list(
         part='ContentDetails',
         id=channel_id
     ).execute()
-    uploads_playlist_id = channel_resources['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+    return channel_resources['items'][0]['contentDetails']['relatedPlaylists']['uploads']
 
-    playlist_response = youtube.playlists().list(
+
+def get_channel_playlist(channel_id):
+    uploads_playlist_id = get_channel_upload_playlist(channel_id)
+
+    playlist_response = YOUTUBE.playlists().list(
         part='player',
         id=uploads_playlist_id,
     ).execute()
@@ -71,5 +75,30 @@ def get_channel_playlist(channel_id):
     playlist_player = playlist_response['items'][0]['player']['embedHtml']
     return playlist_player
 
-pprint.pprint(get_channel_playlist('UCLwrLrQPNKsMr9p1035cizA'))
+
+def get_channel_videos(channel_id):
+    uploads_playlist_id = get_channel_upload_playlist(channel_id)
+    videos = YOUTUBE.playlistItems().list(
+        playlistId=uploads_playlist_id,
+        part="snippet",
+    ).execute()
+    return videos['items']
+
+
+def get_channel_subscriptions(channel_id, pageToken=None):
+    subscriptions = YOUTUBE.subscriptions().list(
+        part='snippet',
+        channelId=channel_id,
+        maxResults=10,
+        pageToken=pageToken,
+    ).execute()
+    items = subscriptions['items']
+    nextPageToken = subscriptions.get('nextPageToken')
+    if nextPageToken:
+        next_items = get_channel_subscriptions(channel_id, pageToken=nextPageToken)
+        items += next_items
+    return items
+
+
+pprint.pprint(get_channel_subscriptions('UCjYn4RyjCCMJX67Rck4sq5A'))
 
