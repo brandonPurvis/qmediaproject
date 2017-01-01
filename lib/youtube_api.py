@@ -1,8 +1,10 @@
 import pprint
 from apiclient.discovery import build
 
+
 API_KEY = 'AIzaSyDPRG9co3-DkVg-ek58XZD3YSbkmCi08X0'
 YOUTUBE = build('youtube', 'v3', developerKey=API_KEY)
+
 
 class Channel(object):
     def __init__(self, name, image, desc, channel_id):
@@ -56,6 +58,7 @@ def get_channel(channel_id):
         return None
     return Channel.from_api_response(search_response['items'][0])
 
+
 def get_channel_upload_playlist(channel_id):
     channel_resources = YOUTUBE.channels().list(
         part='ContentDetails',
@@ -100,5 +103,5 @@ def get_channel_subscriptions(channel_id, pageToken=None):
     return items
 
 
-pprint.pprint(get_channel_subscriptions('UCjYn4RyjCCMJX67Rck4sq5A'))
+# pprint.pprint(get_channel_subscriptions('UCjYn4RyjCCMJX67Rck4sq5A'))
 
