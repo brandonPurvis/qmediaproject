@@ -12,7 +12,6 @@ class ChannelModel(db.Model):
 
 	@classmethod
 	def load_channel(cls, channel_id):
-		print("Loading {}".format(channel_id))
 		search_response = YOUTUBE.channels().list(
 			part='snippet',
 			id=channel_id,
@@ -70,7 +69,7 @@ class ChannelModel(db.Model):
 			part='snippet',
 			channelId=self.channel_id,
 			maxResults=10,
-			pageToken=pageToken,
+			pageToken=None,
 		).execute()
 		items = subscriptions['items']
 		nextPageToken = subscriptions.get('nextPageToken')
@@ -98,7 +97,6 @@ class ChannelModel(db.Model):
 		).execute()
 		playlist_player = playlist_response['items'][0]['player']['embedHtml']
 		return playlist_player
-
 
 	def __str__(self):
 		return "Channel {}".format(self.name)

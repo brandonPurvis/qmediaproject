@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-from lib import youtube_api
 import datetime
 import random
 
@@ -10,7 +9,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
 db = SQLAlchemy(app)
 
-import models
+from models import ChannelModel
 
 FILTERS = [
     {
@@ -55,12 +54,17 @@ FILTERS = [
     }
 ]
 
+
 def load_channel_list():
-    return [sub['snippet']['resourceId']['channelId'] for sub in youtube_api.get_channel_subscriptions(SOURCE_CHANNEL_ID)]
+    source_channel = ChannelModel.get_channel(SOURCE_CHANNEL_ID)
+    featured_channel_ids = source_channel.get_subscriptions()
+    return [sub['snippet']['resourceId']['channelId'] for sub in featured_channel_ids]
 
 SOURCE_CHANNEL_ID = 'UCjYn4RyjCCMJX67Rck4sq5A'
 CHANNEL_IDS = load_channel_list()
 LOAD_TIME = datetime.datetime.now()
+
+
 
 @app.route('/')
 def index():
@@ -73,7 +77,7 @@ def get_channels():
     if (datetime.datetime.now() - LOAD_TIME > datetime.timedelta(hours=3)):
         CHANNEL_IDS = load_channel_list()
         LOAD_TIME = datetime.datetime.now()
-    channels = [models.ChannelModel.get_channel(channel_id).dict for channel_id in CHANNEL_IDS]
+    channels = [ChannelModel.get_channel(channel_id).dict for channel_id in CHANNEL_IDS]
     return jsonify(channels)
 
 @app.route('/channel/videos/<channel_id>')
@@ -83,7 +87,7 @@ def get_channel_videos(channel_id):
 @app.route('/random/channel/')
 def get_random_channel():
     random_channel_id = random.choice(CHANNEL_IDS)
-    channel = models.ChannelModel.get_channel(random_channel_id).dict
+    channel = ChannelModel.get_channel(random_channel_id).dict
     return jsonify(channel)
 
 @app.route('/filters/')
@@ -92,5 +96,6 @@ def get_filters():
 
 @app.route('/channel/playlist/<channel_id>')
 def get_channel_playlist(channel_id):
-    playlist = models.ChannelModel.get_channel(channel_id).get_playlist()
+    playlist = ChannelModel.get_channel(channel_id).get_playlist()
     return playlist
+    
