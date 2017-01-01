@@ -1,6 +1,5 @@
 from datetime import datetime
-from lib.youtube_api import YOUTUBE
-from main import db
+from main import db, ytapi
 
 
 class ChannelModel(db.Model):
@@ -12,7 +11,7 @@ class ChannelModel(db.Model):
 
 	@classmethod
 	def load_channel(cls, channel_id):
-		search_response = YOUTUBE.channels().list(
+		search_response = ytapi.channels().list(
 			part='snippet',
 			id=channel_id,
 		).execute()
@@ -65,7 +64,7 @@ class ChannelModel(db.Model):
 		}
 
 	def get_subscriptions(self):
-		subscriptions = YOUTUBE.subscriptions().list(
+		subscriptions = ytapi.subscriptions().list(
 			part='snippet',
 			channelId=self.channel_id,
 			maxResults=10,
@@ -74,7 +73,7 @@ class ChannelModel(db.Model):
 		items = subscriptions['items']
 		nextPageToken = subscriptions.get('nextPageToken')
 		while nextPageToken:
-			subscriptions = YOUTUBE.subscriptions().list(
+			subscriptions = ytapi.subscriptions().list(
 				part='snippet',
 				channelId=self.channel_id,
 				maxResults=10,
@@ -86,12 +85,12 @@ class ChannelModel(db.Model):
 		return items
 
 	def get_playlist(self):
-		channel_resources = YOUTUBE.channels().list(
+		channel_resources = ytapi.channels().list(
 			part='ContentDetails',
 			id=self.channel_id,
 		).execute()
 		playlist_id = channel_resources['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-		playlist_response = YOUTUBE.playlists().list(
+		playlist_response = ytapi.playlists().list(
 			part='player',
 			id=playlist_id,
 		).execute()

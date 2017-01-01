@@ -5,9 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 import random
 
+from apiclient.discovery import build
+
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
+app.config['YOUTUBE_DATA_API_KEY'] = 'AIzaSyDPRG9co3-DkVg-ek58XZD3YSbkmCi08X0'
 db = SQLAlchemy(app)
+ytapi = build('youtube', 'v3', developerKey=app.config['YOUTUBE_DATA_API_KEY'])
 
 from models import ChannelModel
 
