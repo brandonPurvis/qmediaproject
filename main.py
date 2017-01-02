@@ -17,7 +17,11 @@ ytapi = build('youtube', 'v3', developerKey=app.config['YOUTUBE_DATA_API_KEY'])
 from models import ChannelModel
 
 def load_channel_list():
-    source_channel = ChannelModel.get_channel(app.config['YOUTUBE_SOURCE_CHANNEL_ID'])
+    try: 
+        source_channel = ChannelModel.get_channel(app.config['YOUTUBE_SOURCE_CHANNEL_ID'])
+    except:
+        db.create_all()
+        source_channel = ChannelModel.get_channel(app.config['YOUTUBE_SOURCE_CHANNEL_ID'])
     featured_channel_ids = source_channel.get_subscriptions()
     return [sub['snippet']['resourceId']['channelId'] for sub in featured_channel_ids]
 
