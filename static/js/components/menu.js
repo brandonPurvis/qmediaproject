@@ -8,7 +8,8 @@ var app = app || {};
 
         events: {
             'click li#home-nav': 'goToHome',
-            'click li#about-nav': 'goToAbout'
+            'click li#about-nav': 'goToAbout',
+            'click li#random-nav': 'openRandomVideo'
         },
 
         initialize: function(){
@@ -33,6 +34,18 @@ var app = app || {};
         goToAbout: function(){
             this.hideAll();
             app.aboutView.show();
+        },
+
+        openRandomVideo: function(){
+            this.hideAll();
+            app.appView.show(); // Show main app view
+            $.get('/random/playlist/', '', function(resp){
+                console.log("pl: " + resp);
+                var placeholder_channel = new app.Channel({'name':'Random Channel'});
+                console.log("phc: " + placeholder_channel);
+                app.playerView.openPlayer(resp, placeholder_channel);
+                app.playerView.show();
+            });
         }
     });
 })();

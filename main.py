@@ -95,6 +95,13 @@ def get_random_channel():
     channel = ChannelModel.get_channel(random_channel_id).dict
     return jsonify(channel)
 
+@app.route('/random/playlist/')
+def get_random_playlist():
+    random_channel_id = random.choice(CHANNEL_IDS)
+    channel = ChannelModel.get_channel(random_channel_id)
+    playlist = channel.get_playlist()
+    return playlist
+
 @app.route('/filters/')
 def get_filters():
     return jsonify(FILTERS)
