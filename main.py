@@ -1,9 +1,7 @@
 import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
-import datetime
-import random
 
 from apiclient.discovery import build
 
