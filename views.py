@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import random
 
 from flask import render_template, jsonify
@@ -9,29 +9,37 @@ from models import ChannelModel
 
 
 CHANNEL_IDS = load_channel_list()
-LOAD_TIME = datetime.datetime.now()
-REFRESH_TIME_DELTA = datetime.timedelta(hours=3)
+LOAD_TIME = datetime.now()
+REFRESH_TIME_DELTA = timedelta(hours=3)
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-
+"%Y-%m-%dT%H:%M:%S.000Z"
 @app.route('/channels/')
 def get_channels():
     global LOAD_TIME
     global CHANNEL_IDS
-    if (datetime.datetime.now() - LOAD_TIME > REFRESH_TIME_DELTA):
+    if (datetime.now() - LOAD_TIME > REFRESH_TIME_DELTA):
         CHANNEL_IDS = load_channel_list()
-        LOAD_TIME = datetime.datetime.now()
-    channels = [ChannelModel.get_channel(channel_id).dict for channel_id in CHANNEL_IDS]
+        LOAD_TIME = datetime.now()
+    channels = [ChannelModel.get_channel(channel_id) for channel_id in CHANNEL_IDS]
+    channels = sorted(
+        channels,
+        key=lambda x: datetime.strptime(x.last_video['snippet']['publishedAt'], "%Y-%m-%dT%H:%M:%S.000Z"),
+        reverse=True
+    )
+    channels = [channel.dict for channel in channels]
     return jsonify(channels)
 
 
 @app.route('/channel/playlist/<channel_id>')
 def get_channel_playlist(channel_id):
-    playlist = ChannelModel.get_channel(channel_id).get_playlist()
+    channel = ChannelModel.get_channel(channel_id)
+    playlist = channel.get_playlist()
+    print(channel.last_video)
     return playlist
 
 

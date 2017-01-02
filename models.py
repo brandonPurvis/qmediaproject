@@ -53,6 +53,11 @@ class ChannelModel(db.Model):
 		return 'http://www.youtube.com/channel/{}'.format(self.channel_id)
 
 	@property
+	def last_video(self):
+		videos = self.get_videos()
+		return videos[0] if videos else {'snippet':{'publishedAt': "1970-01-01T12:00:00.000Z"}}
+	
+	@property
 	def dict(self):
 		return {
 			'name': self.name,
@@ -96,6 +101,18 @@ class ChannelModel(db.Model):
 		).execute()
 		playlist_player = playlist_response['items'][0]['player']['embedHtml']
 		return playlist_player
+
+	def get_videos(self):
+		channel_resources = ytapi.channels().list(
+			part='ContentDetails',
+			id=self.channel_id,
+		).execute()
+		playlist_id = channel_resources['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+		videos = ytapi.playlistItems().list(
+			playlistId=playlist_id,
+			part="snippet",
+		).execute()
+		return videos['items']
 
 	def __str__(self):
 		return "Channel {}".format(self.name)
