@@ -17,7 +17,7 @@ REFRESH_TIME_DELTA = timedelta(hours=3)
 def index():
     return render_template('index.html')
 
-"%Y-%m-%dT%H:%M:%S.000Z"
+
 @app.route('/channels/')
 def get_channels():
     global LOAD_TIME
@@ -39,7 +39,6 @@ def get_channels():
 def get_channel_playlist(channel_id):
     channel = ChannelModel.get_channel(channel_id)
     playlist = channel.get_playlist()
-    print(channel.last_video)
     return playlist
 
 
