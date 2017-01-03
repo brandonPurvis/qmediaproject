@@ -1,5 +1,6 @@
 from datetime import datetime
-from main import db, ytapi
+from datetime import timedelta
+from qmediaproject.main import db, ytapi
 
 
 class ChannelModel(db.Model):
@@ -16,19 +17,28 @@ class ChannelModel(db.Model):
 			id=channel_id,
 		).execute()
 		found = search_response.get('items')
+		channel = cls.query.filter_by(channel_id=channel_id).first()
 		if found:
 			found = found[0]
 			name = found['snippet']['title']
 			image = found['snippet']['thumbnails']['high']['url']
 			description = found['snippet']['description']
 			channel_id = found['id']
-			return cls(name, image, description, channel_id)
+			if channel:
+				channel.name = name
+				channel.image = image
+				channel.desc = description
+				channel.birth = datetime.now()
+				channel.save()
+				return channel
+			else:
+				return cls(name, image, description, channel_id)
 		return None
 
 	@classmethod
 	def get_channel(cls, channel_id):
 		found = cls.query.filter_by(channel_id=channel_id).first()
-		if not found:
+		if not found or datetime.now() - found.birth > timedelta(hours=3):
 			found = cls.load_channel(channel_id)
 		return found
 
