@@ -17,6 +17,10 @@ REFRESH_TIME_DELTA = timedelta(hours=3)
 def index():
     return render_template('index.html')
 
+@app.route('/info/<channel_id>')
+def info(channel_id):
+    channel = ChannelModel.get_channel(channel_id)
+    return render_template('channel_info.html', channel=channel)
 
 @app.route('/channels/')
 def get_channels():
@@ -28,7 +32,7 @@ def get_channels():
     channels = [ChannelModel.get_channel(channel_id) for channel_id in CHANNEL_IDS]
     channels = sorted(
         channels,
-        key=lambda x: datetime.strptime(x.last_video['snippet']['publishedAt'], "%Y-%m-%dT%H:%M:%S.000Z"),
+        key=lambda x: datetime.strptime(x.last_video['publishedAt'], "%Y-%m-%dT%H:%M:%S.000Z"),
         reverse=True
     )
     channels = [channel.dict for channel in channels]
@@ -48,6 +52,13 @@ def get_random_playlist():
     channel = ChannelModel.get_channel(random_channel_id)
     playlist = channel.get_playlist()
     return playlist
+
+
+@app.route('/channel/videos/<channel_id>')
+def get_channel_videos(channel_id):
+    channel = ChannelModel.get_channel(channel_id)
+    videos = channel.get_videos()
+    return jsonify(videos)
 
 
 @app.route('/filters/')
