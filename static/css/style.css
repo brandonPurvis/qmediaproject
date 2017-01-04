@@ -59,6 +59,15 @@
     margin: auto;
 }
 
+#channel-playlist {
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+.media-object {
+    width: 75px;
+}
 
 #player-close {
     color: #aaa;

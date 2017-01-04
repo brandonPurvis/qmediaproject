@@ -20,7 +20,16 @@
         <div id="player-modal">
             <div id="player-content">
                 <span id="player-close">X</span>
-                <div id="player-name"></div>
+                <div class="media">
+                    <a class="media-left" href="<%= link %>">
+                        <img class="media-object" src="<%= image %>" alt="Generic placeholder image">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><%= name %></h4>
+                        <%= desc %>
+                    </div>
+                </div>
+                <div id="channel-playlist"><%= playlist %></div>
                 <div id="iframe-container"></div>
             </div>
         </div>

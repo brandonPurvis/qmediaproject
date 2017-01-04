@@ -11,22 +11,25 @@ var app = app || {};
         },
 
         initialize: function(){
-            _.bindAll(this, 'render', 'openPlayer', 'closePlayer', 'show', 'hide');
+            this.model = new app.Channel({'name': 'testing!'});
+            _.bindAll(this, 'render', 'openPlayer', 'closePlayer', 'setChannelModel', 'show', 'hide');
             this.render();
         },
 
         render: function(){
-            $(this.el).html(this.template());
-            this.iframe_container = $('div#iframe-container', this.el);
-            this.player_name = $('div#player-name', this.el);
+            $(this.el).html(this.template(this.model.attributes));
         },
 
+        setChannelModel: function(channel_model){
+            this.model = channel_model;
+            this.model.bind('change', this.render, this);
+            this.model.setPlaylist();
+            this.render();
+        },
+
+
         openPlayer: function(iframe, channel_model){
-            iframe = iframe.replace('http', 'https');
-            this.player_name.html(channel_model.get('name'));
-            this.iframe_container.html(iframe);
-            $('iframe', this.el).css('width', '100%');
-            $('iframe', this.el).css('height', '100%');
+            this.setChannelModel(channel_model);
             this.show();
         },
 

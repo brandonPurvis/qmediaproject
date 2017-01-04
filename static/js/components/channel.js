@@ -11,6 +11,7 @@ var app = app || {};
             channel_id: "",
             tags: [],
             hidden: false,
+            playlist: null
         },
 
         containsTerm: function(term){
@@ -25,6 +26,16 @@ var app = app || {};
 
         hide: function(){
             this.set({hidden: true});
+        },
+
+        setPlaylist: function(){
+            self = this;
+            if (this.get('playlist') == null){ // load from server if null
+                var url = '/channel/playlist/' + this.get('channel_id');
+                $.get(url, '', function(resp){
+                    self.set({'playlist': resp.replace('https', 'http')});
+                });
+            };
         }
     });
 
