@@ -86,9 +86,7 @@ var app = app || {};
 
         setPlayer:function(){
             var self = this;
-            $.get('/channel/playlist/'+this.model.get('channel_id'), '', function(resp){
-                app.playerView.openPlayer(resp, self.model);
-            });
+            app.playerView.openPlayer(self.model);
         },
 
         updateVisibility: function(){

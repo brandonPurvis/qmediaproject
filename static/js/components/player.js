@@ -28,13 +28,12 @@ var app = app || {};
         },
 
 
-        openPlayer: function(iframe, channel_model){
+        openPlayer: function(channel_model){
             this.setChannelModel(channel_model);
             this.show();
         },
 
         closePlayer: function(){
-            this.iframe_container.html('');
             this.hide();
         },
 
