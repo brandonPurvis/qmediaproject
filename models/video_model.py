@@ -1,4 +1,4 @@
-from qmediaproject.lib import utils
+from lib import utils
 
 class VideoModel(object):
 	def __init__(self, channel_id, title, description, image, pub_date, video_id):

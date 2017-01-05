@@ -1,6 +1,6 @@
 from datetime import datetime
 from datetime import timedelta
-from qmediaproject.main import db, ytapi
+from main import db, ytapi
 from video_model import VideoModel
 
 
