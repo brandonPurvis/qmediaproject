@@ -33,7 +33,7 @@ var app = app || {};
             if (this.get('playlist') == null){ // load from server if null
                 var url = '/channel/playlist/' + this.get('channel_id');
                 $.get(url, '', function(resp){
-                    self.set({'playlist': resp});
+                    self.set({'playlist': resp.replace('http', 'https')});
                 });
             };
         }
