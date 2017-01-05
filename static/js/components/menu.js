@@ -39,11 +39,11 @@ var app = app || {};
         openRandomVideo: function(){
             this.hideAll();
             app.appView.show(); // Show main app view
-            $.get('/random/playlist/', '', function(resp){
+            $.get('/channel/random/', '', function(resp){
                 console.log("pl: " + resp);
-                var placeholder_channel = new app.Channel({'name':'Random Channel'});
-                console.log("phc: " + placeholder_channel);
-                app.playerView.openPlayer(resp, placeholder_channel);
+                var channel = new app.Channel(resp);
+                console.log("phc: " + channel);
+                app.playerView.openPlayer(channel);
                 app.playerView.show();
             });
         }

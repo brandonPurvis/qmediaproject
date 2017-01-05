@@ -1,6 +1,7 @@
 from datetime import datetime
 from datetime import timedelta
 from qmediaproject.main import db, ytapi
+from video_model import VideoModel
 
 
 class ChannelModel(db.Model):
@@ -65,7 +66,7 @@ class ChannelModel(db.Model):
 	@property
 	def last_video(self):
 		videos = self.get_videos()
-		return videos[0] if videos else {'publishedAt': "1970-01-01T12:00:00.000Z"}
+		return videos[0] if videos else VideoModel.placeholder()
 	
 	@property
 	def dict(self):
@@ -122,7 +123,7 @@ class ChannelModel(db.Model):
 			playlistId=playlist_id,
 			part="snippet",
 		).execute()
-		return [video['snippet'] for video in videos['items']]
+		return [VideoModel.from_resp(video['snippet']) for video in videos['items']]
 
 	def __str__(self):
 		return "Channel {}".format(self.name)
