@@ -52,8 +52,8 @@ var app = app || {};
         template: _.template($('#content-template').html()),
 
         events: {
-            'click .content-image': 'setPlayer',
-            'click .content-desc': 'setPlayer',
+            'click .content-image': 'openPlayer',
+            'click .content-desc': 'openPlayer',
             'mouseover .content-view': 'showDescription',
             'mouseout .content-view': 'hideDescription'
         },
@@ -84,9 +84,10 @@ var app = app || {};
             $('div.content-desc', this.el).css('display', 'none');
         },
 
-        setPlayer:function(){
+        openPlayer:function(){
             var self = this;
             app.playerView.openPlayer(self.model);
+            app.playerView.show();
         },
 
         updateVisibility: function(){
