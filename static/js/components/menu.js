@@ -40,9 +40,7 @@ var app = app || {};
             this.hideAll();
             app.appView.show(); // Show main app view
             $.get('/channel/random/', '', function(resp){
-                console.log("pl: " + resp);
                 var channel = new app.Channel(resp);
-                console.log("phc: " + channel);
                 app.playerView.openPlayer(channel);
                 app.playerView.show();
             });
